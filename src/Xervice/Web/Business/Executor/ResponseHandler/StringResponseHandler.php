@@ -7,11 +7,11 @@ namespace Xervice\Web\Business\Executor\ResponseHandler;
 class StringResponseHandler implements ResponseHandlerInterface
 {
     /**
-     * @param callable $controller
+     * @param $response
      */
-    public function handleResponse(callable $controller): void
+    public function handleResponse($response): void
     {
-        echo $controller();
+        echo $response['_controller']($response);
     }
 
 }

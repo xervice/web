@@ -7,7 +7,7 @@ namespace Xervice\Web\Business\Executor\ResponseHandler;
 interface ResponseHandlerInterface
 {
     /**
-     * @param callable $controller
+     * @param mixed $response
      */
-    public function handleResponse(callable $controller): void;
+    public function handleResponse($response): void;
 }

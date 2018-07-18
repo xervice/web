@@ -7,6 +7,7 @@ use Xervice\Core\Locator\Locator;
 use Xervice\Web\Business\Plugin\PluginCollection;
 use Xervice\Web\Business\Provider\RouteProvider;
 use XerviceTest\Web\Plugin\TestPlugin;
+use XerviceTest\Web\Plugin\TestPluginWithParam;
 
 /**
  * @method \Xervice\Web\WebFactory getFactory()
@@ -43,6 +44,37 @@ class IntegrationTest extends \Codeception\Test\Unit
 
         $this->assertEquals(
             'TEST',
+            $response
+        );
+    }
+
+    /**
+     * @group Xervice
+     * @group Web
+     * @group Integration
+     */
+    public function testWebProviderWithParam()
+    {
+        $pluginCollection = new PluginCollection(
+            [
+                new TestPluginWithParam()
+            ]
+        );
+
+        $routeProvider = new RouteProvider(
+            $pluginCollection,
+            $this->getRoutingFacade()
+        );
+
+        $routeProvider->provideRoutings();
+
+        ob_start();
+        $this->getFacade()->executeUrl('/testparam/unit');
+        $response = ob_get_contents();
+        ob_end_clean();
+
+        $this->assertEquals(
+            'TEST(unit)',
             $response
         );
     }

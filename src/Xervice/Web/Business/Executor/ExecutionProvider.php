@@ -43,7 +43,7 @@ class ExecutionProvider implements ExecutionProviderInterface
     {
         $executionData = $this->routeFacade->matchUrl($url);
         $this->validateExecutionData($executionData);
-        $this->responseHandler->handleResponse($executionData['_controller']);
+        $this->responseHandler->handleResponse($executionData);
     }
 
     /**
