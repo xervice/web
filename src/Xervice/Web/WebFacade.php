@@ -25,4 +25,12 @@ class WebFacade extends AbstractFacade
     {
         $this->getFactory()->createExecutionProvider()->executeUrl($url);
     }
+
+    /**
+     * @throws \Xervice\Web\Business\Exception\WebExeption
+     */
+    public function execute(): void
+    {
+        $this->getFactory()->createExecutionProvider()->execute();
+    }
 }

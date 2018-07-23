@@ -35,6 +35,19 @@ class ExecutionProvider implements ExecutionProviderInterface
     }
 
     /**
+     * @throws \Xervice\Web\Business\Exception\WebExeption
+     */
+    public function execute(): void
+    {
+        $this->executeUrl(
+            sprintf(
+                '/%s',
+                $_SERVER['REQUEST_URI']
+            )
+        );
+    }
+
+    /**
      * @param string $url
      *
      * @throws \Xervice\Web\Business\Exception\WebExeption
