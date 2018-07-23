@@ -42,7 +42,7 @@ class ExecutionProvider implements ExecutionProviderInterface
         $this->executeUrl(
             sprintf(
                 '%s',
-                $_SERVER['REQUEST_URI'] ?: '/'
+                $_SERVER['REQUEST_URI'] ?? '/'
             )
         );
     }
