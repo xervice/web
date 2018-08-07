@@ -4,6 +4,7 @@
 namespace Xervice\Web;
 
 
+use Symfony\Component\HttpFoundation\Request;
 use Xervice\Core\Facade\AbstractFacade;
 
 /**
@@ -24,6 +25,16 @@ class WebFacade extends AbstractFacade
     public function executeUrl(string $url): void
     {
         $this->getFactory()->createExecutionProvider()->executeUrl($url);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Xervice\Web\Business\Exception\WebExeption
+     */
+    public function executeRequest(Request $request): void
+    {
+        $this->getFactory()->createExecutionProvider()->executeRequest($request);
     }
 
     /**

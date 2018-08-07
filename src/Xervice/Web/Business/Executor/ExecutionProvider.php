@@ -71,7 +71,7 @@ class ExecutionProvider implements ExecutionProviderInterface
      *
      * @throws \Xervice\Web\Business\Exception\WebExeption
      */
-    public function executeRequest(Request $request)
+    public function executeRequest(Request $request): void
     {
         $this->handleData(
             $this->routeFacade->matchRequest($request)
