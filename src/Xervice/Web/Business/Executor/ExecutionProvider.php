@@ -4,9 +4,10 @@
 namespace Xervice\Web\Business\Executor;
 
 
+use Symfony\Component\HttpFoundation\Request;
 use Xervice\Routing\RoutingFacade;
-use Xervice\Web\Business\Exception\WebExeption;
 use Xervice\Web\Business\Executor\ResponseHandler\ResponseHandlerInterface;
+use Xervice\Web\Business\Executor\Validator\ValidatorInterface;
 
 class ExecutionProvider implements ExecutionProviderInterface
 {
@@ -21,29 +22,35 @@ class ExecutionProvider implements ExecutionProviderInterface
     private $responseHandler;
 
     /**
+     * @var \Xervice\Web\Business\Executor\Validator\ValidatorInterface
+     */
+    private $validator;
+
+    /**
      * ExecutionProvider constructor.
      *
      * @param \Xervice\Routing\RoutingFacade $routeFacade
      * @param \Xervice\Web\Business\Executor\ResponseHandler\ResponseHandlerInterface $responseHandler
+     * @param \Xervice\Web\Business\Executor\Validator\ValidatorInterface $validator
      */
     public function __construct(
         RoutingFacade $routeFacade,
-        ResponseHandlerInterface $responseHandler
+        ResponseHandlerInterface $responseHandler,
+        ValidatorInterface $validator
     ) {
         $this->routeFacade = $routeFacade;
         $this->responseHandler = $responseHandler;
+        $this->validator = $validator;
     }
+
 
     /**
      * @throws \Xervice\Web\Business\Exception\WebExeption
      */
     public function execute(): void
     {
-        $this->executeUrl(
-            sprintf(
-                '%s',
-                $this->getPath()
-            )
+        $this->executeRequest(
+            $this->getRequest()
         );
     }
 
@@ -54,39 +61,39 @@ class ExecutionProvider implements ExecutionProviderInterface
      */
     public function executeUrl(string $url): void
     {
-        $executionData = $this->routeFacade->matchUrl($url);
-        $this->validateExecutionData($executionData);
-        $this->responseHandler->handleResponse($executionData);
+        $this->handleData(
+            $this->routeFacade->matchUrl($url)
+        );
     }
 
     /**
-     * @param array $executionData
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Xervice\Web\Business\Exception\WebExeption
      */
-    private function validateExecutionData(array $executionData): void
+    public function executeRequest(Request $request)
     {
-        if (!isset($executionData['_controller'])) {
-            throw new WebExeption(
-                sprintf(
-                    'No callable given for route %s',
-                    $executionData['_route']
-                )
-            );
-        }
+        $this->handleData(
+            $this->routeFacade->matchRequest($request)
+        );
     }
 
     /**
-     * @return string
+     * @return \Symfony\Component\HttpFoundation\Request
      */
-    private function getPath(): string
+    private function getRequest(): Request
     {
-        $path = '/';
-        if (isset($_SERVER['REQUEST_URI'])) {
-            $path = parse_url($_SERVER['REQUEST_URI']);
-            $path = $path['path'] ?? '/';
-        }
+        return Request::createFromGlobals();
+    }
 
-        return $path;
+    /**
+     * @param $executionData
+     *
+     * @throws \Xervice\Web\Business\Exception\WebExeption
+     */
+    private function handleData($executionData): void
+    {
+        $this->validator->validateExecutionData($executionData);
+        $this->responseHandler->handleResponse($executionData);
     }
 }
