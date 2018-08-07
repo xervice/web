@@ -42,7 +42,7 @@ class ExecutionProvider implements ExecutionProviderInterface
         $this->executeUrl(
             sprintf(
                 '%s',
-                $_SERVER['REQUEST_URI'] ?? '/'
+                $this->getPath()
             )
         );
     }
@@ -74,5 +74,19 @@ class ExecutionProvider implements ExecutionProviderInterface
                 )
             );
         }
+    }
+
+    /**
+     * @return string
+     */
+    private function getPath(): string
+    {
+        $path = '/';
+        if (isset($_SERVER['REQUEST_URI'])) {
+            $path = parse_url($_SERVER['REQUEST_URI']);
+            $path = $path['path'] ?? '/';
+        }
+
+        return $path;
     }
 }
