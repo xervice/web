@@ -1,7 +1,7 @@
 <?php
+declare(strict_types=1);
 
-
-namespace Xervice\Web\Business\Plugin;
+namespace Xervice\Web\Business\Dependency\Plugin;
 
 
 use DataProvider\RouteDataProvider;

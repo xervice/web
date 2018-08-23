@@ -1,13 +1,13 @@
 <?php
+declare(strict_types=1);
 
-
-namespace Xervice\Web\Business\Plugin;
+namespace Xervice\Web\Business\Dependency\Plugin;
 
 
 class PluginCollection implements \Iterator, \Countable
 {
     /**
-     * @var \Xervice\Web\Business\Plugin\WebProviderPluginInterface[]
+     * @var \Xervice\Web\Business\Dependency\Plugin\WebProviderPluginInterface[]
      */
     private $collection;
 
@@ -19,7 +19,7 @@ class PluginCollection implements \Iterator, \Countable
     /**
      * Collection constructor.
      *
-     * @param \Xervice\Web\Business\Plugin\WebProviderPluginInterface[] $collection
+     * @param \Xervice\Web\Business\Dependency\Plugin\WebProviderPluginInterface[] $collection
      */
     public function __construct(array $collection)
     {
@@ -29,7 +29,7 @@ class PluginCollection implements \Iterator, \Countable
     }
 
     /**
-     * @param \Xervice\Web\Business\Plugin\WebProviderPluginInterface $validator
+     * @param \Xervice\Web\Business\Dependency\Plugin\WebProviderPluginInterface $validator
      */
     public function add(WebProviderPluginInterface $validator): void
     {
@@ -37,7 +37,7 @@ class PluginCollection implements \Iterator, \Countable
     }
 
     /**
-     * @return \Xervice\Web\Business\Plugin\WebProviderPluginInterface
+     * @return \Xervice\Web\Business\Dependency\Plugin\WebProviderPluginInterface
      */
     public function current(): WebProviderPluginInterface
     {

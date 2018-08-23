@@ -1,16 +1,16 @@
 <?php
 
 
-namespace Xervice\Web;
+namespace Xervice\Web\Business;
 
 
 use Symfony\Component\HttpFoundation\Request;
-use Xervice\Core\Facade\AbstractFacade;
+use Xervice\Core\Business\Model\Facade\AbstractFacade;
 
 /**
- * @method \Xervice\Web\WebFactory getFactory()
+ * @method \Xervice\Web\Business\WebBusinessFactory getFactory()
  */
-class WebFacade extends AbstractFacade
+class WebFacade extends AbstractFacade implements WebFacadeInterface
 {
     public function initWebRouting(): void
     {
@@ -19,8 +19,6 @@ class WebFacade extends AbstractFacade
 
     /**
      * @param string $url
-     *
-     * @throws \Xervice\Web\Business\Exception\WebExeption
      */
     public function executeUrl(string $url): void
     {
@@ -29,17 +27,12 @@ class WebFacade extends AbstractFacade
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @throws \Xervice\Web\Business\Exception\WebExeption
      */
     public function executeRequest(Request $request): void
     {
         $this->getFactory()->createExecutionProvider()->executeRequest($request);
     }
 
-    /**
-     * @throws \Xervice\Web\Business\Exception\WebExeption
-     */
     public function execute(): void
     {
         $this->getFactory()->createExecutionProvider()->execute();

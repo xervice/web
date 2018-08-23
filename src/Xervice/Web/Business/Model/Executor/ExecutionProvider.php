@@ -1,37 +1,37 @@
 <?php
 
 
-namespace Xervice\Web\Business\Executor;
+namespace Xervice\Web\Business\Model\Executor;
 
 
 use Symfony\Component\HttpFoundation\Request;
-use Xervice\Routing\RoutingFacade;
-use Xervice\Web\Business\Executor\ResponseHandler\ResponseHandlerInterface;
-use Xervice\Web\Business\Executor\Validator\ValidatorInterface;
+use Xervice\Routing\Business\RoutingFacade;
+use Xervice\Web\Business\Model\Executor\ResponseHandler\ResponseHandlerInterface;
+use Xervice\Web\Business\Model\Executor\Validator\ValidatorInterface;
 
 class ExecutionProvider implements ExecutionProviderInterface
 {
     /**
-     * @var \Xervice\Routing\RoutingFacade
+     * @var \Xervice\Routing\Business\RoutingFacade
      */
     private $routeFacade;
 
     /**
-     * @var \Xervice\Web\Business\Executor\ResponseHandler\ResponseHandlerInterface
+     * @var \Xervice\Web\Business\Model\Executor\ResponseHandler\ResponseHandlerInterface
      */
     private $responseHandler;
 
     /**
-     * @var \Xervice\Web\Business\Executor\Validator\ValidatorInterface
+     * @var \Xervice\Web\Business\Model\Executor\Validator\ValidatorInterface
      */
     private $validator;
 
     /**
      * ExecutionProvider constructor.
      *
-     * @param \Xervice\Routing\RoutingFacade $routeFacade
-     * @param \Xervice\Web\Business\Executor\ResponseHandler\ResponseHandlerInterface $responseHandler
-     * @param \Xervice\Web\Business\Executor\Validator\ValidatorInterface $validator
+     * @param \Xervice\Routing\Business\RoutingFacade $routeFacade
+     * @param \Xervice\Web\Business\Model\Executor\ResponseHandler\ResponseHandlerInterface $responseHandler
+     * @param \Xervice\Web\Business\Model\Executor\Validator\ValidatorInterface $validator
      */
     public function __construct(
         RoutingFacade $routeFacade,
@@ -43,10 +43,6 @@ class ExecutionProvider implements ExecutionProviderInterface
         $this->validator = $validator;
     }
 
-
-    /**
-     * @throws \Xervice\Web\Business\Exception\WebExeption
-     */
     public function execute(): void
     {
         $this->executeRequest(
@@ -56,8 +52,6 @@ class ExecutionProvider implements ExecutionProviderInterface
 
     /**
      * @param string $url
-     *
-     * @throws \Xervice\Web\Business\Exception\WebExeption
      */
     public function executeUrl(string $url): void
     {
@@ -68,8 +62,6 @@ class ExecutionProvider implements ExecutionProviderInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @throws \Xervice\Web\Business\Exception\WebExeption
      */
     public function executeRequest(Request $request): void
     {
@@ -87,11 +79,9 @@ class ExecutionProvider implements ExecutionProviderInterface
     }
 
     /**
-     * @param $executionData
-     *
-     * @throws \Xervice\Web\Business\Exception\WebExeption
+     * @param array $executionData
      */
-    private function handleData($executionData): void
+    private function handleData(array $executionData): void
     {
         $this->validator->validateExecutionData($executionData);
         $this->responseHandler->handleResponse($executionData);

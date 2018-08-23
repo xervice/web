@@ -1,13 +1,13 @@
 <?php
 
 
-namespace Xervice\Web\Business\Executor\ResponseHandler;
+namespace Xervice\Web\Business\Model\Executor\ResponseHandler;
 
 
 class StringResponseHandler implements ResponseHandlerInterface
 {
     /**
-     * @param $response
+     * @param mixed $response
      */
     public function handleResponse($response): void
     {

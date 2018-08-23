@@ -2,10 +2,10 @@
 
 namespace XerviceTest\Web;
 
-use Xervice\Core\Locator\Dynamic\DynamicLocator;
-use Xervice\Core\Locator\Locator;
-use Xervice\Web\Business\Plugin\PluginCollection;
-use Xervice\Web\Business\Provider\RouteProvider;
+use Xervice\Core\Business\Model\Locator\Dynamic\Business\DynamicBusinessLocator;
+use Xervice\Core\Business\Model\Locator\Locator;
+use Xervice\Web\Business\Dependency\Plugin\PluginCollection;
+use Xervice\Web\Business\Model\Provider\RouteProvider;
 use XerviceTest\Web\Plugin\TestPlugin;
 use XerviceTest\Web\Plugin\TestPluginWithParam;
 
@@ -15,7 +15,7 @@ use XerviceTest\Web\Plugin\TestPluginWithParam;
  */
 class IntegrationTest extends \Codeception\Test\Unit
 {
-    use DynamicLocator;
+    use DynamicBusinessLocator;
 
     /**
      * @group Xervice

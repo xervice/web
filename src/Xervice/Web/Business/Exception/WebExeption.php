@@ -4,6 +4,8 @@
 namespace Xervice\Web\Business\Exception;
 
 
-class WebExeption extends \Exception
+use Xervice\Core\Business\Exception\XerviceException;
+
+class WebExeption extends XerviceException
 {
 }

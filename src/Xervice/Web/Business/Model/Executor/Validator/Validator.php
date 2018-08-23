@@ -1,7 +1,8 @@
 <?php
 
 
-namespace Xervice\Web\Business\Executor\Validator;
+namespace Xervice\Web\Business\Model\Executor\Validator;
+
 
 
 use Xervice\Web\Business\Exception\WebExeption;

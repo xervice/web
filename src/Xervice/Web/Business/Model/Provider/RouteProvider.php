@@ -1,12 +1,12 @@
 <?php
 
 
-namespace Xervice\Web\Business\Provider;
+namespace Xervice\Web\Business\Model\Provider;
 
 
 use DataProvider\RouteCollectionDataProvider;
-use Xervice\Routing\RoutingFacade;
-use Xervice\Web\Business\Plugin\PluginCollection;
+use Xervice\Routing\Business\RoutingFacade;
+use Xervice\Web\Business\Dependency\Plugin\PluginCollection;
 
 class RouteProvider implements RouteProviderInterface
 {
@@ -16,15 +16,15 @@ class RouteProvider implements RouteProviderInterface
     private $pluginCollection;
 
     /**
-     * @var \Xervice\Routing\RoutingFacade
+     * @var \Xervice\Routing\Business\RoutingFacade
      */
     private $routingFacade;
 
     /**
      * RouteProvider constructor.
      *
-     * @param \Xervice\Web\Business\Plugin\PluginCollection $pluginCollection
-     * @param \Xervice\Routing\RoutingFacade $routingFacade
+     * @param \Xervice\Web\Business\Dependency\Plugin\PluginCollection $pluginCollection
+     * @param \Xervice\Routing\Business\RoutingFacade $routingFacade
      */
     public function __construct(
         PluginCollection $pluginCollection,

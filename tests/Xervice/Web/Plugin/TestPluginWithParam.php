@@ -5,7 +5,7 @@ namespace XerviceTest\Web\Plugin;
 
 
 use DataProvider\RouteCollectionDataProvider;
-use Xervice\Web\Business\Plugin\AbstractWebProviderPlugin;
+use Xervice\Web\Business\Dependency\Plugin\AbstractWebProviderPlugin;
 
 class TestPluginWithParam extends AbstractWebProviderPlugin
 {

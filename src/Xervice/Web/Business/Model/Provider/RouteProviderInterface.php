@@ -1,6 +1,6 @@
 <?php
 
-namespace Xervice\Web\Business\Provider;
+namespace Xervice\Web\Business\Model\Provider;
 
 interface RouteProviderInterface
 {

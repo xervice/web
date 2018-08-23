@@ -1,43 +1,67 @@
 <?php
-
+declare(strict_types=1);
 
 namespace Xervice\Web;
 
 
-use Xervice\Core\Dependency\DependencyProviderInterface;
-use Xervice\Core\Dependency\Provider\AbstractProvider;
-use Xervice\Web\Business\Plugin\PluginCollection;
+use Xervice\Core\Business\Model\Dependency\DependencyContainerInterface;
+use Xervice\Core\Business\Model\Dependency\Provider\AbstractDependencyProvider;
+use Xervice\Web\Business\Dependency\Plugin\PluginCollection;
 
-/**
- * @method \Xervice\Core\Locator\Locator getLocator()
- */
-class WebDependencyProvider extends AbstractProvider
+class WebDependencyProvider extends AbstractDependencyProvider
 {
     public const ROUTE_PROVIDER_COLLECTION = 'route.provider.collection';
 
     public const ROUTING_FACADE = 'routing.facade';
 
     /**
-     * @param \Xervice\Core\Dependency\DependencyProviderInterface $dependencyProvider
+     * @param DependencyContainerInterface $container
+     *
+     * @return DependencyContainerInterface
      */
-    public function handleDependencies(DependencyProviderInterface $dependencyProvider): void
+    public function handleDependencies(DependencyContainerInterface $container): DependencyContainerInterface
     {
-        $dependencyProvider[self::ROUTE_PROVIDER_COLLECTION] = function () {
-            return new PluginCollection(
-                $this->getRouteProvider()
-            );
-        };
+        $container = $this->addPluginCollection($container);
+        $container = $this->addRoutingFacade($container);
 
-        $dependencyProvider[self::ROUTING_FACADE] = function (DependencyProviderInterface $dependencyProvider) {
-            return $dependencyProvider->getLocator()->routing()->facade();
-        };
+        return $container;
     }
 
     /**
-     * @return \Xervice\Web\Business\Plugin\WebProviderPluginInterface[]
+     * @return \Xervice\Web\Business\Dependency\Plugin\WebProviderPluginInterface[]
      */
     protected function getRouteProvider(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Xervice\Core\Business\Model\Dependency\DependencyContainerInterface $container
+     *
+     * @return \Xervice\Core\Business\Model\Dependency\DependencyContainerInterface
+     */
+    protected function addPluginCollection(
+        DependencyContainerInterface $container
+    ): DependencyContainerInterface {
+        $container[self::ROUTE_PROVIDER_COLLECTION] = function () {
+            return new PluginCollection(
+                $this->getRouteProvider()
+            );
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Xervice\Core\Business\Model\Dependency\DependencyContainerInterface $container
+     *
+     * @return \Xervice\Core\Business\Model\Dependency\DependencyContainerInterface
+     */
+    protected function addRoutingFacade(
+        DependencyContainerInterface $container
+    ): DependencyContainerInterface {
+        $container[self::ROUTING_FACADE] = function (DependencyContainerInterface $container) {
+            return $container->getLocator()->routing()->facade();
+        };
+        return $container;
     }
 }
