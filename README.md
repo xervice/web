@@ -17,3 +17,4 @@ composer require xervice/web
 
 Configuration
 ------------------
+You must add the \Xervice\Web\Communication\Plugin\WebService Plugin to your kernel stack.
